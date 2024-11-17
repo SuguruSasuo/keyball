@@ -39,9 +39,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define AUTO_MOUSE_DEFAULT_LAYER 3
 #define AUTO_MOUSE_TIME 780
 
-#define DYNAMIC_KEYMAP_LAYER_COUNT 5
+#define DYNAMIC_KEYMAP_LAYER_COUNT 6
 
-#define KEYBALL_SCROLL_DIV_DEFAULT 5
+#define KEYBALL_SCROLL_DIV_DEFAULT 1
 
 #define PERMISSIVE_HOLD
 #define RETRO_TAPPING
