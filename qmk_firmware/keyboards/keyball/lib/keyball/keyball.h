@@ -184,7 +184,7 @@ typedef struct
     keypos_t last_pos;
     report_mouse_t last_mouse;
 
-    // Buffer to indicate pressing key tests.
+    // Buffer to indicate pressing key.
     char pressing_keys[KEYBALL_OLED_MAX_PRESSING_KEYCODES + 1];
 } keyball_t;
 
