@@ -157,6 +157,7 @@ static uint16_t movement_size_of(report_mouse_t *rep)
 {
   return abs(rep->x) + abs(rep->y);
 }
+
 //////////////////////////////////////////////////////////////////////////////
 // Pointing device driver
 
@@ -235,6 +236,7 @@ static void adjust_mouse_speed(report_mouse_t *r)
   r->x = clip2int8(r->x * speed_factor);
   r->y = clip2int8(r->y * speed_factor);
 }
+
 __attribute__((weak)) void keyball_on_apply_motion_to_mouse_move(keyball_motion_t *m, report_mouse_t *r, bool is_left)
 {
 #if KEYBALL_MODEL == 61 || KEYBALL_MODEL == 39 || KEYBALL_MODEL == 147 || KEYBALL_MODEL == 44
@@ -251,6 +253,7 @@ __attribute__((weak)) void keyball_on_apply_motion_to_mouse_move(keyball_motion_
 #else
 #error("unknown Keyball model")
 #endif
+  adjust_mouse_speed(r);
   // clear motion
   m->x = 0;
   m->y = 0;
@@ -391,6 +394,7 @@ bool auto_mouse_activation(report_mouse_t mouse_report)
   }
 }
 #endif
+
 report_mouse_t pointing_device_driver_get_report(report_mouse_t rep)
 {
   // fetch from optical sensor.
@@ -558,7 +562,7 @@ void keyball_oled_render_ballinfo(void)
   oled_write(format_4d(keyball_get_cpi()) + 1, false);
   oled_write_P(PSTR("00 "), false);
 
-  // indicate scroll snap mode: "VT" (vertical), "HO" (horizontal), and "SCR" (free)
+  // indicate scroll snap mode: "VT" (vertical), "HN" (horiozntal), and "SCR" (free)
 #if 1 && KEYBALL_SCROLLSNAP_ENABLE == 2
   switch (keyball_get_scrollsnap_mode())
   {
@@ -661,7 +665,7 @@ void keyball_oled_render_layerinfo(void)
     oled_write_P(LFSTR_OFF, false);
   }
 
-  oled_write(format_4d(get_auto_mouse_timeout() / 10) + 1, false);
+  oled_write(format_4d(keyball_get_auto_mouse_timeout() / 10) + 1, false);
   oled_write_char('0', false);
 #else
   oled_write_P(PSTR("\xC2\xC3\xB4\xB5 ---"), false);
@@ -748,6 +752,7 @@ void keyball_handle_auto_mouse_layer_change(layer_state_t state)
   keyball.last_layer_state = state;
 }
 #endif
+
 //////////////////////////////////////////////////////////////////////////////
 // Keyboard hooks
 
@@ -903,7 +908,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record)
           .sdiv = keyball.scroll_div,
 #ifdef POINTING_DEVICE_AUTO_MOUSE_ENABLE
           .amle = get_auto_mouse_enable(),
-          .amlto = (get_auto_mouse_timeout() / AML_TIMEOUT_QU) - 1,
+          .amlto = (keyball_get_auto_mouse_timeout() / AML_TIMEOUT_QU) - 1,
 #endif
 #if KEYBALL_SCROLLSNAP_ENABLE == 2
           .ssnap = keyball_get_scrollsnap_mode(),
@@ -954,14 +959,14 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record)
       break;
     case AML_I50:
     {
-      uint16_t v = get_auto_mouse_timeout() + 50;
-      set_auto_mouse_timeout(MIN(v, AML_TIMEOUT_MAX));
+      uint16_t v = keyball_get_auto_mouse_timeout() + 50;
+      keyball_set_auto_mouse_timeout(MIN(v, AML_TIMEOUT_MAX));
     }
     break;
     case AML_D50:
     {
-      uint16_t v = get_auto_mouse_timeout() - 50;
-      set_auto_mouse_timeout(MAX(v, AML_TIMEOUT_MIN));
+      uint16_t v = keyball_get_auto_mouse_timeout() - 50;
+      keyball_set_auto_mouse_timeout(MAX(v, AML_TIMEOUT_MIN));
     }
     break;
 #endif
