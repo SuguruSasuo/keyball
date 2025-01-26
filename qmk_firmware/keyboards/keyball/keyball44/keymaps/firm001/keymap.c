@@ -83,8 +83,8 @@ const uint16_t PROGMEM my_mouse_btn2[] = {KC_K, KC_L, COMBO_END};
 
 combo_t key_combos[] = {
     COMBO(my_esc, KC_ESC),
-    COMBO(my_mouse_btn1, MS_BTN1),
-    COMBO(my_mouse_btn2, MS_BTN2),
+    COMBO(my_mouse_btn1, KC_BTN1),
+    COMBO(my_mouse_btn2, KC_BTN2),
 };
 #endif
 
