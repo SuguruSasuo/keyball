@@ -62,18 +62,18 @@ layer_state_t layer_state_set_user(layer_state_t state)
 }
 
 // コンボキー定義
-#ifdef COMBO_ENABLE
-const uint16_t PROGMEM my_esc[] = {KC_Q, KC_W, COMBO_END};
-const uint16_t PROGMEM my_mouse_btn1[] = {KC_J, KC_K, COMBO_END};
-const uint16_t PROGMEM my_mouse_btn2[] = {KC_K, KC_L, COMBO_END};
+// #ifdef COMBO_ENABLE
+// const uint16_t PROGMEM my_esc[] = {KC_Q, KC_W, COMBO_END};
+// const uint16_t PROGMEM my_mouse_btn1[] = {KC_J, KC_K, COMBO_END};
+// const uint16_t PROGMEM my_mouse_btn2[] = {KC_K, KC_L, COMBO_END};
 
 
-combo_t key_combos[] = {
-    COMBO(my_esc, KC_ESC),
-    COMBO(my_mouse_btn1, KC_BTN1),
-    COMBO(my_mouse_btn2, KC_BTN2),
-};
-#endif
+// combo_t key_combos[] = {
+//     COMBO(my_esc, KC_ESC),
+//     COMBO(my_mouse_btn1, KC_BTN1),
+//     COMBO(my_mouse_btn2, KC_BTN2),
+// };
+// #endif
 
 #ifdef OLED_ENABLE
 
